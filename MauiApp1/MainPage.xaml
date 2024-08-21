@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiApp1.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MauiApp1"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:sentry="clr-namespace:Sentry;assembly=Sentry"
+    Title="Sentry"
+    x:DataType="local:MainPage"
+    Background="#E0E0E0"
+    >
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <mct:EnumToIntConverter x:Key="EnumToIntConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="25" Spacing="25">
+            <Border HeightRequest="200" Stroke="Transparent">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Grid
+                    Padding="15"
+                    Background="WhiteSmoke"
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="20"
+                    RowDefinitions="Auto,*,*"
+                    >
+                    <Label
+                        Grid.ColumnSpan="2"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="Center"
+                        Text="Cause Crash"
+                        VerticalOptions="Center"
+                        />
+                    <Label
+                        Grid.Row="1"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="Type:"
+                        VerticalOptions="Center"
+                        />
+                    <Picker
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="16"
+                        ItemsSource="{Binding AllCrashTypes}"
+                        SelectedIndex="{Binding SelectedCrashType, Converter={StaticResource EnumToIntConverter}, ConverterParameter={x:Type sentry:CrashType}}"
+                        VerticalOptions="Center"
+                        />
+                    <Button
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Clicked="Crash_Clicked"
+                        FontSize="16"
+                        HeightRequest="40"
+                        Text="Crash"
+                        WidthRequest="100"
+                        />
+                </Grid>
+            </Border>
+            <Border HeightRequest="200" Stroke="Transparent">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Grid
+                    Padding="15"
+                    Background="WhiteSmoke"
+                    RowDefinitions="Auto,*,*"
+                    >
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="Center"
+                        Text="Capture Exception"
+                        VerticalOptions="Center"
+                        />
+                    <Label
+                        Grid.Row="1"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        >
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Throw an " />
+                                <Span FontAttributes="Italic" Text="ApplicationException " />
+                                <Span Text="and capture it." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Button
+                        Grid.Row="2"
+                        Clicked="Capture_Clicked"
+                        FontSize="16"
+                        HeightRequest="40"
+                        Text="Capture"
+                        WidthRequest="100"
+                        />
+                </Grid>
+            </Border>
+            <Border HeightRequest="100" Stroke="Transparent">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Grid
+                    Padding="15"
+                    Background="WhiteSmoke"
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="20"
+                    RowDefinitions="Auto,*,*"
+                    >
+                    <Label
+                        Grid.ColumnSpan="2"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="Center"
+                        Text="SDK"
+                        VerticalOptions="Center"
+                        />
+                    <Label
+                        Grid.Row="1"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="Name:"
+                        VerticalOptions="Center"
+                        />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="sentry.dotnet.maui"
+                        VerticalOptions="Center"
+                        />
+                    <Label
+                        Grid.Row="2"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        Text="Version:"
+                        VerticalOptions="Center"
+                        />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="{Binding SentrySdkVersion}"
+                        VerticalOptions="Center"
+                        />
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
