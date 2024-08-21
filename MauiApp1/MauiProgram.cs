@@ -15,9 +15,11 @@ public static class MauiProgram
                 options.Debug = true;
                 options.TracesSampleRate = 1.0;
                 options.AttachScreenshot = true;
-                options.AddEventProcessors([new MySentryEventProcessorWithHint(), new MySentryEventProcessor()]); // Doesn't catch native/Java crash events
-                options.SetBeforeSend(EnrichEvent); // Doesn't catch native/Java crash events
-                options.ConfigureScope(scope => scope.AddEventProcessors([new MySentryEventProcessorWithHint(), new MySentryEventProcessor()])); // Doesn't catch native/Java crash events
+
+                // Native crashes seem to bypass the following mechanisms
+                options.AddEventProcessors([new MySentryEventProcessorWithHint(), new MySentryEventProcessor()]);
+                options.SetBeforeSend(EnrichEvent);
+                options.ConfigureScope(scope => scope.AddEventProcessors([new MySentryEventProcessorWithHint(), new MySentryEventProcessor()]));
             })
             .Build();
 
